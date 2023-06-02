@@ -1,0 +1,161 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    struct node *left;
+    int info;
+    struct node *right;
+};
+struct node *root=NULL;
+
+void create_BST()
+{
+    struct node *ptr;
+    int n;
+    printf("Enter the no. of nodes:");
+    scanf("%d",&n);
+    for(int i=1;i<=n;i++)
+    {
+        struct node *newnode=(struct node *)malloc(sizeof(struct node));
+        printf("Enter newnode info:");
+        scanf("%d",&newnode->info);
+        newnode->left=NULL;
+        newnode->right=NULL;
+        if(root==NULL)
+        {
+            root=newnode;
+}
+        else
+        {
+            //struct node *ptr;
+            ptr=root;
+            while(ptr!=NULL)
+            {
+                if(newnode->info > ptr->info)
+                {
+                    if(ptr->right==NULL)
+                    {
+                        ptr->right=newnode;
+                        break;
+                    }
+                    else
+                    {
+                        ptr=ptr->right;
+                    }
+                }
+                else
+                {
+                    if(ptr->left==NULL)
+                    {
+                        ptr->left=newnode;
+                        break;
+                    }
+                    else
+                   {
+                        ptr=ptr->left;
+                    }
+                }
+            }
+        }
+    }
+}
+void preorder(struct node *ptr)
+{
+    if(ptr!=NULL)
+    {
+        printf("%d ",ptr->info);
+        preorder(ptr->left);
+        preorder(ptr->right);
+    }
+}
+void postorder(struct node *ptr)
+{
+    if(ptr!=NULL)
+    {
+        postorder(ptr->left);
+        postorder(ptr->right);
+printf("%d ",ptr->info);
+    }
+}
+void inorder(struct node *ptr)
+{
+    if(ptr!=NULL)
+    {
+        inorder(ptr->left);
+        printf("%d ",ptr->info);
+        inorder(ptr->right);
+    }
+}
+int smallest_BST(struct node*ptr)
+{
+ if(ptr->left==NULL)
+ {
+  return(ptr->info);
+ }
+ smallest_BST(ptr->left);
+}
+int largest_BST(struct node*ptr)
+{
+ if(ptr->right==NULL)
+ {
+  return(ptr->info);
+ }
+ largest_BST(ptr->right);
+}
+int main ()  
+{  
+    int choice,min,max;     
+   printf("\n1.CREATE\n2.PREORDER\n3.POSTORDER\n4.INORDER\n5.SMALLEST ELEMENT\n6.LARGEST ELEMENT\n7.QUIT");
+    do
+    {
+        printf("\n Enter the Choice:");
+        scanf("%d",&choice);
+        switch(choice)
+        {
+            case 1:
+            {
+                create_BST();
+                break;
+            }
+            case 2:
+            {
+                preorder(root);
+                break;
+            }
+            case 3:
+            {
+                postorder(root);
+                break;
+            }
+            case 4:
+            {
+               inorder(root);
+                break;
+            }
+            case 5:
+            {
+               min=smallest_BST(root);
+               printf("%d",min);
+                break;
+            }
+            case 6:
+            {
+               max=largest_BST(root);
+               printf("%d",max);
+                break;
+            }
+            case 7:
+            {
+              printf("\nquit");
+                break;
+                return 0;
+            }
+            default:
+            {
+                printf ("\n Enter a Valid Choice(1/2/3/4/5/6/7)");
+            } 
+        }
+    }
+    while(choice!=7);
+    return 0;
+}
